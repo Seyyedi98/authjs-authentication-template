@@ -15,7 +15,7 @@ datasource db {
 
 model User {
   id            String    @id @default(cuid())
-  phoneNumber   Int
+  phoneNumber   Int?
   name          String?
   email         String?   @unique
   emailVerified DateTime? @map("email_verified")
