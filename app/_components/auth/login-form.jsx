@@ -17,8 +17,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "../ui/form/form-error";
 import { FormSuccess } from "../ui/form/form-success";
+import { login } from "@/actions/auth/login";
+import { useTransition } from "react";
 
 export const LoginForm = () => {
+  const [isPanding, startTransition] = useTransition();
+
   const form = useForm({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -28,7 +32,9 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (values) => {
-    console.log(values);
+    startTransition(() => {
+      login(values);
+    });
   };
 
   return (
@@ -49,7 +55,12 @@ export const LoginForm = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="email" type="email" />
+                    <Input
+                      {...field}
+                      disabled={isPanding}
+                      placeholder="email"
+                      type="email"
+                    />
                   </FormControl>
                   {/* <FormMessage /> */}
                 </FormItem>
@@ -64,7 +75,12 @@ export const LoginForm = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="********" type="password" />
+                    <Input
+                      {...field}
+                      disabled={isPanding}
+                      placeholder="********"
+                      type="password"
+                    />
                   </FormControl>
                   {/* <FormMessage /> */}
                 </FormItem>
@@ -73,7 +89,9 @@ export const LoginForm = () => {
           </div>
           <FormError message="" />
           <FormSuccess message="" />
-          <Button type="submit">Login</Button>
+          <Button disabled={isPanding} type="submit">
+            Login
+          </Button>
         </form>
       </Form>
     </CardWrapper>
