@@ -2,7 +2,7 @@
 
 import { CardWrapper } from "../ui/card-wrapper";
 import { useForm } from "react-hook-form";
-import { LoginSchema } from "@/schemas";
+import { LoginSchema, RegisterSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {
@@ -17,17 +17,18 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "../ui/form/form-error";
 import { FormSuccess } from "../ui/form/form-success";
-import { login } from "@/actions/auth/login";
+import { register } from "@/actions/auth/register";
 import { useState, useTransition } from "react";
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isPanding, startTransition] = useTransition();
 
   const form = useForm({
-    resolver: zodResolver(LoginSchema),
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
@@ -35,7 +36,7 @@ export const LoginForm = () => {
 
   const onSubmit = (values) => {
     startTransition(() => {
-      login(values).then((data) => {
+      register(values).then((data) => {
         setError(data.error);
         setSuccess(data.success);
       });
@@ -44,14 +45,28 @@ export const LoginForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Welcome back"
-      backButtonLabel="Dont have an account?"
-      backButtonHref="/auth/register"
-      showSocial
+      headerLabel="Welcome"
+      backButtonLabel="Already have an account?"
+      backButtonHref="/auth/login"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
+            {/* Name field */}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  Name
+                  <FormControl>
+                    <Input {...field} disabled={isPanding} placeholder="Name" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             {/* Email field */}
             <FormField
               control={form.control}
@@ -95,7 +110,7 @@ export const LoginForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button disabled={isPanding} type="submit">
-            Login
+            Register
           </Button>
         </form>
       </Form>

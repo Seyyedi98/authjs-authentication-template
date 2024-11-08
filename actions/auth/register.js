@@ -1,10 +1,10 @@
 "use server";
 
-import { LoginSchema } from "@/schemas";
+import { RegisterSchema } from "@/schemas";
 
-export const login = async (values) => {
+export const register = async (values) => {
   // server side values validation
-  const validatedFields = LoginSchema.safeParse(values);
+  const validatedFields = RegisterSchema.safeParse(values);
 
   if (!validatedFields.success) {
     return { error: "Invalid fields" };
