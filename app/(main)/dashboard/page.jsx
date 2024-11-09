@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth, signOut } from "@/auth";
 import { Link } from "lucide-react";
 import React from "react";
 
@@ -8,6 +8,14 @@ const page = async () => {
   return (
     <div>
       <div>user: {JSON.stringify(session)}</div>
+      <form
+        action={async () => {
+          "use server";
+          await signOut();
+        }}
+      >
+        <button type="submit">Signout</button>
+      </form>
     </div>
   );
 };
