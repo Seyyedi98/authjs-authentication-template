@@ -1,6 +1,4 @@
 import { auth, signOut } from "@/auth";
-import { Link } from "lucide-react";
-import React from "react";
 
 const page = async () => {
   const session = await auth();
@@ -14,7 +12,7 @@ const page = async () => {
           await signOut();
         }}
       >
-        <button type="submit">Signout</button>
+        <button type="submit">Sign Out</button>
       </form>
     </div>
   );

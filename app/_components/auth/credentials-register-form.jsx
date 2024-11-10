@@ -20,7 +20,7 @@ import { FormSuccess } from "../ui/form/form-success";
 import { register } from "@/actions/auth/register";
 import { useState, useTransition } from "react";
 
-export const RegisterForm = () => {
+export const CredentialsRegisterForm = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isPanding, startTransition] = useTransition();
@@ -46,7 +46,7 @@ export const RegisterForm = () => {
   return (
     <CardWrapper
       headerLabel="Welcome"
-      backButtonLabel="Already have an account?"
+      backButtonLabel="Already have an account"
       backButtonHref="/auth/login"
     >
       <Form {...form}>
@@ -109,7 +109,7 @@ export const RegisterForm = () => {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button disabled={isPanding} type="submit">
+          <Button disabled={isPanding} type="submit" className="w-full">
             Register
           </Button>
         </form>
