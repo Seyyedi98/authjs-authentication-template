@@ -19,6 +19,7 @@ import { FormError } from "../ui/form/form-error";
 import { FormSuccess } from "../ui/form/form-success";
 import { login } from "@/actions/auth/login";
 import { useState, useTransition } from "react";
+import Link from "next/link";
 
 export const CredentialsLoginForm = () => {
   const [error, setError] = useState("");
@@ -34,6 +35,8 @@ export const CredentialsLoginForm = () => {
   });
 
   const onSubmit = (values) => {
+    setError("");
+    setSuccess("");
     startTransition(async () => {
       login(values).then((data) => {
         setError(data?.error);
@@ -86,6 +89,16 @@ export const CredentialsLoginForm = () => {
                       type="password"
                     />
                   </FormControl>
+                  <Button
+                    size="sm"
+                    variant="link"
+                    className="px-0 font-normal"
+                    asChild
+                  >
+                    <Link href="/auth/reset">
+                      رمز عبور خود را فراموش کرده ابد؟
+                    </Link>
+                  </Button>
                   <FormMessage />
                 </FormItem>
               )}

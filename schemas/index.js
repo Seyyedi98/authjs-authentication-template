@@ -14,3 +14,7 @@ export const RegisterSchema = z.object({
     message: "",
   }),
 });
+
+export const ResetSchema = z.object({
+  email: z.string().email({ message: "آدرس ایمیل نامعتبر است" }),
+});
