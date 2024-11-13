@@ -56,7 +56,7 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
-        "fade-in": {
+        "fade-left": {
           "0%": {
             opacity: "0",
             transform: "translateX(2rem)",
@@ -68,7 +68,7 @@ module.exports = {
         },
       },
       animation: {
-        "fade-in": "fade-in .7s ease",
+        "fade-left": "fade-left .7s ease",
       },
     },
   },

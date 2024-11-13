@@ -2,9 +2,11 @@
 
 import bcrypt from "bcryptjs";
 
-import { RegisterSchema } from "@/schemas";
-import prisma from "@/lib/client";
 import { getUserByEmail } from "@/data/user";
+import prisma from "@/lib/client";
+import { RegisterSchema } from "@/schemas";
+import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export const register = async (values) => {
   // server side values validation
@@ -33,7 +35,9 @@ export const register = async (values) => {
     },
   });
 
-  //TODO: send verification token email
+  const verificationToken = await generateVerificationToken(email);
 
-  return { success: "User created" };
+  await sendVerificationEmail(verificationToken.email, verificationToken.token);
+
+  return { success: "Confirmation email sent!" };
 };

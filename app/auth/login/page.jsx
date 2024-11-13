@@ -11,12 +11,12 @@ const Login = () => {
           <TabsTrigger value="email">Email</TabsTrigger>
         </TabsList>
         <TabsContent value="phonenumber">
-          <div className="animate-fade-in">
+          <div className="animate-fade-left">
             <MobileLoginForm />
           </div>
         </TabsContent>
         <TabsContent value="email">
-          <div className="animate-fade-in">
+          <div className="animate-fade-left">
             <CredentialsLoginForm />
           </div>
         </TabsContent>

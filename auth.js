@@ -1,8 +1,8 @@
-import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import prisma from "./lib/client";
+import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 import { getUserById } from "./data/user";
+import prisma from "./lib/client";
 
 export const {
   handlers: { GET, POST },
@@ -10,7 +10,28 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
+  pages: { signIn: "/auth/login", error: "/auth/error" },
+  async linkAccount({ user }) {
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { emailVerified: new Date() },
+    });
+  },
   callbacks: {
+    async signIn({ user, account }) {
+      const existingUser = getUserById(user.id);
+
+      // Prevent sign in without email verification
+      if (account.provider !== "credentials") {
+        if (!existingUser?.emailVerified) return false;
+        return true;
+      }
+
+      // 2FA check
+
+      return true;
+    },
+
     async session({ token, session }) {
       // Get id in session,  so we can access it from middleware
       if (token.sub && session.user) {
@@ -22,6 +43,7 @@ export const {
 
       return session;
     },
+
     async jwt({ token }) {
       if (!token.sub) return token;
 

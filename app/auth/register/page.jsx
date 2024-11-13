@@ -10,12 +10,12 @@ const page = () => {
         <TabsTrigger value="email">Email</TabsTrigger>
       </TabsList>
       <TabsContent value="phonenumber">
-        <div className="animate-fade-in">
+        <div className="animate-fade-left">
           <MobileRegisterForm />
         </div>
       </TabsContent>
       <TabsContent value="email">
-        <div className="animate-fade-in">
+        <div className="animate-fade-left">
           <CredentialsRegisterForm />
         </div>
       </TabsContent>

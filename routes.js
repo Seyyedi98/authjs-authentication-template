@@ -1,7 +1,7 @@
 // Routes that unauthorized users can visit
-export const publicRoutes = ["/"];
+export const publicRoutes = ["/", "/auth/new-verification"];
 
-export const authRoutes = ["/auth/login", "/auth/register"];
+export const authRoutes = ["/auth/login", "/auth/register", "/auth/error"];
 
 export const apiAuthPrefix = "/api/auth";
 
