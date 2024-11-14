@@ -1,10 +1,7 @@
 "use client";
 
-import { CardWrapper } from "../ui/card-wrapper";
-import { useForm } from "react-hook-form";
-import { LoginSchema } from "@/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { login } from "@/actions/auth/login";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,12 +11,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { LoginSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { CardWrapper } from "../ui/card-wrapper";
 import { FormError } from "../ui/form/form-error";
 import { FormSuccess } from "../ui/form/form-success";
-import { login } from "@/actions/auth/login";
-import { useState, useTransition } from "react";
-import Link from "next/link";
 
 export const CredentialsLoginForm = () => {
   const [error, setError] = useState("");
