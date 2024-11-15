@@ -29,7 +29,7 @@ export const {
         return true;
       }
 
-      // 2FA check
+      // Check if 2FA is enabled
       if (existingUser.isTwoFactorEnabled) {
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
           existingUser.id
