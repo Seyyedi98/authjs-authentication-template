@@ -1,11 +1,12 @@
 import { auth, signOut } from "@/auth";
+import Link from "next/link";
 
 const page = async () => {
   const session = await auth();
 
   return (
     <div>
-      <div>user: {JSON.stringify(session)}</div>
+      <Link href="/settings">Settings</Link>
       <form
         action={async () => {
           "use server";
