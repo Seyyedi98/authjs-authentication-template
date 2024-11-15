@@ -14,9 +14,9 @@ const SettingsPage = () => {
   return (
     <div>
       <div>SettingsPage</div>
-      <LogoutButton>
+      {/* <LogoutButton>
         <Button>Logout</Button>
-      </LogoutButton>
+      </LogoutButton> */}
     </div>
   );
 };
