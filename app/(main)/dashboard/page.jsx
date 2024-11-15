@@ -1,4 +1,4 @@
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
 import Link from "next/link";
 
 const page = async () => {
@@ -7,14 +7,6 @@ const page = async () => {
   return (
     <div>
       <Link href="/settings">Settings</Link>
-      <form
-        action={async () => {
-          "use server";
-          await signOut({ redirectTo: "/" });
-        }}
-      >
-        <button type="submit">Sign Out</button>
-      </form>
     </div>
   );
 };
