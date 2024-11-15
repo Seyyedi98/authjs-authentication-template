@@ -3,6 +3,8 @@ import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 import { getUserById } from "./data/user";
 import prisma from "./lib/client";
+import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation";
+import { revalidatePath } from "next/cache";
 
 export const {
   handlers: { GET, POST },
@@ -19,7 +21,7 @@ export const {
   },
   callbacks: {
     async signIn({ user, account }) {
-      const existingUser = getUserById(user.id);
+      const existingUser = await getUserById(user.id);
 
       // Prevent sign in without email verification
       if (account.provider !== "credentials") {
@@ -28,6 +30,19 @@ export const {
       }
 
       // 2FA check
+      if (existingUser.isTwoFactorEnabled) {
+        const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
+          existingUser.id
+        );
+        console.log(twoFactorConfirmation);
+
+        if (!twoFactorConfirmation) return false;
+
+        // Delete 2FA confirmation for next sign in
+        await prisma.twoFactorConfirmation.delete({
+          where: { id: twoFactorConfirmation.id },
+        });
+      }
 
       return true;
     },
