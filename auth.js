@@ -4,6 +4,7 @@ import authConfig from "./auth.config";
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation";
 import { getUserById } from "./data/user";
 import prisma from "./lib/client";
+import { getAccountByUserId } from "./data/account";
 
 export const {
   handlers: { GET, POST },
@@ -54,8 +55,12 @@ export const {
       if (token.role && session.user) {
         session.user.role = token.role;
       }
+
       if (session.user) {
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.isOAuth = token.isOAuth;
       }
 
       return session;
@@ -68,8 +73,15 @@ export const {
 
       if (!existingUser) return token;
 
+      const existingAccount = await getAccountByUserId(existingUser.id);
+
+      // When user updates profile, first update session with useSession in action/settings.js
+      // then pass tokens here
+      token.name = existingUser.name;
+      token.email = existingUser.email;
       token.role = existingUser.role;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+      token.isOAuth = !!existingAccount;
 
       return token;
     },

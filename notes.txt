@@ -1,0 +1,12 @@
+After updating user profile, database will change but old data is stored in user session so it won't change in website
+
+For SSR: 
+    1.const {update} = useSession()
+    2.after update db use .then(update)
+    3.in auth.js inside jwt add  token.name = existingUser.name;
+    4. in session add 
+     if (session.user) {
+        session.user.name = token.name;
+      }
+
+For CSR:
