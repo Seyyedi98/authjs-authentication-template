@@ -13,30 +13,27 @@ const Navbar = () => {
       <div className="flex gap-x-2">
         <Button
           asChild
-          variant={pathname === "/dashboard" ? "default" : "outline"}
+          variant={pathname === "/dashboard/settings" ? "default" : "outline"}
         >
-          <Link href="/dashboard">Dashboard</Link>
+          <Link href="/dashboard/settings">Settings</Link>
         </Button>
         <Button
           asChild
-          variant={pathname === "/settings" ? "default" : "outline"}
+          variant={pathname === "/dashboard/server" ? "default" : "outline"}
         >
-          <Link href="/settings">Settings</Link>
+          <Link href="/dashboard/server">Server</Link>
         </Button>
         <Button
           asChild
-          variant={pathname === "/server" ? "default" : "outline"}
+          variant={pathname === "/dashboard/client" ? "default" : "outline"}
         >
-          <Link href="/server">Server</Link>
+          <Link href="/dashboard/client">Client</Link>
         </Button>
         <Button
           asChild
-          variant={pathname === "/client" ? "default" : "outline"}
+          variant={pathname === "/dashboard/admin" ? "default" : "outline"}
         >
-          <Link href="/client">Client</Link>
-        </Button>
-        <Button asChild variant={pathname === "/admin" ? "default" : "outline"}>
-          <Link href="/admin">Admin</Link>
+          <Link href="/dashboard/admin">Admin</Link>
         </Button>
       </div>
       <UserButton />
