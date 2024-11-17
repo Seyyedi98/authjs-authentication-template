@@ -18,6 +18,22 @@ export const RegisterSchema = z.object({
   }),
 });
 
+export const OtpLoginSchema = z.object({
+  phoneNumber: z.string().length(11),
+  password: z.string().min(1, { message: "رمز عبور نامعتبر" }),
+  code: z.optional(z.string()),
+});
+
+export const OtpRegisterSchema = z.object({
+  phoneNumber: z.string().length(11),
+  password: z
+    .string()
+    .min(6, { message: "رمز عبور باید بیش از ۶ کاراکتر باشد" }),
+  name: z.string().min(1, {
+    message: "",
+  }),
+});
+
 export const ResetSchema = z.object({
   email: z.string().email({ message: "آدرس ایمیل نامعتبر است" }),
 });

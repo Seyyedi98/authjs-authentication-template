@@ -22,3 +22,15 @@ export const getTwoFactorTokenByEmail = async (email) => {
     return null;
   }
 };
+
+export const getOtpTokenByPhoneNumber = async (phoneNumber) => {
+  try {
+    const twoOtpToken = await prisma.OtpToken.findFirst({
+      where: { phoneNumber },
+    });
+
+    return twoOtpToken;
+  } catch {
+    return null;
+  }
+};

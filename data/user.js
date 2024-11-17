@@ -25,3 +25,16 @@ export const getUserById = async (id) => {
     return null;
   }
 };
+
+export const getUserByPhoneNumber = async (phoneNumber) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        phoneNumber,
+      },
+    });
+    return user;
+  } catch {
+    return null;
+  }
+};

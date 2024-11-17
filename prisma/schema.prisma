@@ -20,7 +20,7 @@ enum UserRole {
 
 model User {
   id                      String                 @id @default(cuid())
-  phoneNumber             Int?
+  phoneNumber             String?                @unique
   name                    String?
   email                   String?                @unique
   emailVerified           DateTime?              @map("email_verified")
@@ -90,4 +90,13 @@ model twoFactorConfirmation {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId])
+}
+
+model OtpToken {
+  id          String   @id @default(cuid())
+  phoneNumber String
+  token       String   @unique
+  expires     DateTime
+
+  @@unique([phoneNumber, token])
 }

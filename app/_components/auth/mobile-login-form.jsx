@@ -1,10 +1,7 @@
 "use client";
 
-import { CardWrapper } from "../ui/card-wrapper";
-import { useForm } from "react-hook-form";
-import { LoginSchema } from "@/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { otpLogin } from "@/actions/auth/otp-login";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,30 +11,47 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { LoginSchema, OtpLoginSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { CardWrapper } from "../ui/card-wrapper";
 import { FormError } from "../ui/form/form-error";
 import { FormSuccess } from "../ui/form/form-success";
-import { login } from "@/actions/auth/login";
-import { useState, useTransition } from "react";
 
 export const MobileLoginForm = () => {
+  const [showOtpInput, setShowOtpInput] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isPanding, startTransition] = useTransition();
 
   const form = useForm({
-    resolver: zodResolver(LoginSchema),
+    resolver: zodResolver(OtpLoginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      phoneNumber: "",
+      password: "password",
+      code: "",
     },
   });
 
   const onSubmit = (values) => {
+    setError("");
+    setSuccess("");
     startTransition(async () => {
-      login(values).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
+      otpLogin(values).then((data) => {
+        if (data?.error) {
+          // form.reset();
+          setError(data.error);
+        }
+
+        if (data?.success) {
+          // form.reset();
+          setSuccess(data.success);
+        }
+
+        if (data?.showOtpInput) {
+          setShowOtpInput(true);
+        }
       });
     });
   };
@@ -52,49 +66,51 @@ export const MobileLoginForm = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
             {/* Email field */}
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPanding}
-                      placeholder="email"
-                      type="email"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {!showOtpInput && (
+              <FormField
+                control={form.control}
+                name="phoneNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        disabled={isPanding}
+                        placeholder="09123456789"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
 
-            {/* Password field */}
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPanding}
-                      placeholder="********"
-                      type="password"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {/* OTP Confirmation page */}
+            {showOtpInput && (
+              <FormField
+                control={form.control}
+                name="code"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>OTP Code</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        disabled={isPanding}
+                        placeholder="123456"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button disabled={isPanding} type="submit" className="w-full">
-            Login
+            {showOtpInput ? "Confirm" : "Login"}
           </Button>
         </form>
       </Form>

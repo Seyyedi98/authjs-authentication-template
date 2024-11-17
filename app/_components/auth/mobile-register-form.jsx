@@ -1,10 +1,7 @@
 "use client";
 
-import { CardWrapper } from "../ui/card-wrapper";
-import { useForm } from "react-hook-form";
-import { LoginSchema, RegisterSchema } from "@/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { otpRegister } from "@/actions/auth/otp-register";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,11 +11,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { OtpRegisterSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { CardWrapper } from "../ui/card-wrapper";
 import { FormError } from "../ui/form/form-error";
 import { FormSuccess } from "../ui/form/form-success";
-import { register } from "@/actions/auth/register";
-import { useState, useTransition } from "react";
 
 export const MobileRegisterForm = () => {
   const [error, setError] = useState("");
@@ -26,17 +25,17 @@ export const MobileRegisterForm = () => {
   const [isPanding, startTransition] = useTransition();
 
   const form = useForm({
-    resolver: zodResolver(RegisterSchema),
+    resolver: zodResolver(OtpRegisterSchema),
     defaultValues: {
       name: "",
-      email: "",
-      password: "",
+      phoneNumber: "",
+      password: "password",
     },
   });
 
   const onSubmit = (values) => {
     startTransition(() => {
-      register(values).then((data) => {
+      otpRegister(values).then((data) => {
         setError(data.error);
         setSuccess(data.success);
       });
@@ -70,7 +69,7 @@ export const MobileRegisterForm = () => {
             {/* Email field */}
             <FormField
               control={form.control}
-              name="email"
+              name="phoneNumber"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
@@ -78,28 +77,7 @@ export const MobileRegisterForm = () => {
                     <Input
                       {...field}
                       disabled={isPanding}
-                      placeholder="email"
-                      type="email"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Password field */}
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPanding}
-                      placeholder="********"
-                      type="password"
+                      placeholder="09123456789"
                     />
                   </FormControl>
                   <FormMessage />
