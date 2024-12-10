@@ -2,11 +2,9 @@
 
 import bcrypt from "bcryptjs";
 
-import { getUserByEmail, getUserByPhoneNumber } from "@/data/user";
+import { getUserByPhoneNumber } from "@/data/user";
 import prisma from "@/lib/client";
-import { OtpRegisterSchema, RegisterSchema } from "@/schemas";
-import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/lib/mail";
+import { OtpRegisterSchema } from "@/schemas";
 
 export const otpRegister = async (values) => {
   // server side values validation
