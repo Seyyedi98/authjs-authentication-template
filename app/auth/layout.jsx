@@ -3,7 +3,7 @@ import React from "react";
 
 const layout = ({ children }) => {
   return (
-    <div className="h-screen">
+    <div className="h-dvh">
       <nav className="bg-red-500 p-4 text-white flex gap-4 font-semibold absolute w-full">
         <Link href="/auth/login">ورود</Link>
         <Link href="/auth/register">عضویت</Link>

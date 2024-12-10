@@ -44,8 +44,8 @@ export const CredentialsResetForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Forgot your password?"
-      backButtonLabel="Back to login"
+      headerLabel="رمز عبور خود را فراموش کرده اید؟"
+      backButtonLabel="بازگشت به صفحه ی ورود"
       backButtonHref="/auth/login"
     >
       <Form {...form}>
@@ -57,12 +57,12 @@ export const CredentialsResetForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>ایمیل</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       disabled={isPanding}
-                      placeholder="email"
+                      placeholder="email@mail.com"
                       type="email"
                     />
                   </FormControl>
@@ -74,7 +74,7 @@ export const CredentialsResetForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button disabled={isPanding} type="submit" className="w-full">
-            Reset Password
+            بازنشانی رمز عبور
           </Button>
         </form>
       </Form>

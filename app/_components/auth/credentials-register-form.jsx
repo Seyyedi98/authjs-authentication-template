@@ -44,8 +44,8 @@ export const CredentialsRegisterForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Welcome"
-      backButtonLabel="Already have an account"
+      headerLabel="خوش آمدید"
+      backButtonLabel="قبلا حساب کاربری ایجاد کرده اید؟"
       backButtonHref="/auth/login"
     >
       <Form {...form}>
@@ -57,9 +57,13 @@ export const CredentialsRegisterForm = () => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  Name
+                  <FormLabel>نام و نام خانوادگی</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled={isPanding} placeholder="Name" />
+                    <Input
+                      {...field}
+                      disabled={isPanding}
+                      placeholder="نام خود را اینجا بنویسید"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -72,12 +76,12 @@ export const CredentialsRegisterForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>ایمیل</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       disabled={isPanding}
-                      placeholder="email"
+                      placeholder="email@mail.com"
                       type="email"
                     />
                   </FormControl>
@@ -92,7 +96,7 @@ export const CredentialsRegisterForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>رمز عبور</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -109,7 +113,7 @@ export const CredentialsRegisterForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button disabled={isPanding} type="submit" className="w-full">
-            Register
+            عضویت
           </Button>
         </form>
       </Form>

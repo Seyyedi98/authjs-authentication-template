@@ -44,8 +44,8 @@ export const MobileRegisterForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Welcome"
-      backButtonLabel="Already have an account"
+      headerLabel="خوش آمدید"
+      backButtonLabel="حساب کاربری  دارید؟"
       backButtonHref="/auth/login"
     >
       <Form {...form}>
@@ -57,9 +57,13 @@ export const MobileRegisterForm = () => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  Name
+                  <FormLabel>نام و نام خانوادگی</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled={isPanding} placeholder="Name" />
+                    <Input
+                      {...field}
+                      disabled={isPanding}
+                      placeholder="نام خود را اینجا بنویسید"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -72,7 +76,7 @@ export const MobileRegisterForm = () => {
               name="phoneNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>شماره مویایل</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -88,7 +92,7 @@ export const MobileRegisterForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button disabled={isPanding} type="submit" className="w-full">
-            Register
+            عضویت
           </Button>
         </form>
       </Form>

@@ -23,7 +23,7 @@ export const MobileLoginForm = () => {
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [isPanding, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm({
     resolver: zodResolver(OtpLoginSchema),
@@ -58,8 +58,8 @@ export const MobileLoginForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Welcome back"
-      backButtonLabel="Dont have an account?"
+      headerLabel="خوش آمدید"
+      backButtonLabel="حساب کاربری ندارید؟"
       backButtonHref="/auth/register"
     >
       <Form {...form}>
@@ -72,11 +72,11 @@ export const MobileLoginForm = () => {
                 name="phoneNumber"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>شماره موبایل</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        disabled={isPanding}
+                        disabled={isPending}
                         placeholder="09123456789"
                       />
                     </FormControl>
@@ -93,11 +93,11 @@ export const MobileLoginForm = () => {
                 name="code"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>OTP Code</FormLabel>
+                    <FormLabel>کد ارسال شده</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        disabled={isPanding}
+                        disabled={isPending}
                         placeholder="123456"
                       />
                     </FormControl>
@@ -109,8 +109,8 @@ export const MobileLoginForm = () => {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button disabled={isPanding} type="submit" className="w-full">
-            {showOtpInput ? "Confirm" : "Login"}
+          <Button disabled={isPending} type="submit" className="w-full">
+            {showOtpInput ? "ارسال" : "ورود"}
           </Button>
         </form>
       </Form>

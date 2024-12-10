@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const page = () => {
   return (
-    <Tabs defaultValue="phonenumber" className="w-[400px]">
+    <Tabs defaultValue="phonenumber" className="w-[380px] md:w-[400px]">
       <TabsList>
         <TabsTrigger value="phonenumber">Phone Number</TabsTrigger>
         <TabsTrigger value="email">Email</TabsTrigger>

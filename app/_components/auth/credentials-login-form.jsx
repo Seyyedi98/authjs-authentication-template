@@ -60,8 +60,8 @@ export const CredentialsLoginForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Welcome back"
-      backButtonLabel="Dont have an account?"
+      headerLabel="خوش آمدید"
+      backButtonLabel="حساب کاربری ندارید؟"
       backButtonHref="/auth/register"
     >
       <Form {...form}>
@@ -75,12 +75,12 @@ export const CredentialsLoginForm = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>ایمیل</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
                           disabled={isPanding}
-                          placeholder="email"
+                          placeholder="email@mail.com"
                           type="email"
                         />
                       </FormControl>
@@ -94,7 +94,7 @@ export const CredentialsLoginForm = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>رمز عبور</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -127,7 +127,7 @@ export const CredentialsLoginForm = () => {
                 name="code"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Two Factor Code</FormLabel>
+                    <FormLabel>ورود دو مرحله ای</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -144,7 +144,7 @@ export const CredentialsLoginForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button disabled={isPanding} type="submit" className="w-full">
-            {showTwoFactor ? "Confirm" : "Login"}
+            {showTwoFactor ? "ارسال" : "ورود"}
           </Button>
         </form>
       </Form>

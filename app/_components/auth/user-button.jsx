@@ -30,7 +30,7 @@ const UserButton = () => {
           <DropdownMenuItem>
             <LogoutButton>
               <div className="flex items-center">
-                <ExitIcon className="h-4 w-4 mr-2" /> Logout
+                <ExitIcon className="h-4 w-4 mr-2" /> خروج
               </div>
             </LogoutButton>
           </DropdownMenuItem>

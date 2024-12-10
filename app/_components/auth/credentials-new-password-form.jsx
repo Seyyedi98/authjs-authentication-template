@@ -48,8 +48,8 @@ export const CredentialsNewPasswordForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Enter the new password"
-      backButtonLabel="Back to login"
+      headerLabel="رمز عبور خود را وارد کنید"
+      backButtonLabel="بازگشت به صفحه ی ورود"
       backButtonHref="/auth/login"
     >
       <Form {...form}>
@@ -61,12 +61,12 @@ export const CredentialsNewPasswordForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>رمز عبور</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       disabled={isPanding}
-                      placeholder="password"
+                      placeholder="رمز عبور"
                       type="password"
                     />
                   </FormControl>
@@ -78,7 +78,7 @@ export const CredentialsNewPasswordForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button disabled={isPanding} type="submit" className="w-full">
-            Change Password
+            تغییر رمز عبور
           </Button>
         </form>
       </Form>
