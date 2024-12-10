@@ -1,5 +1,5 @@
 import { CredentialsRegisterForm } from "@/app/_components/auth/credentials-register-form";
-import { MobileRegisterForm } from "@/app/_components/auth/mobile-register-form";
+import { MobileLoginForm } from "@/app/_components/auth/mobile-login-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const page = () => {
@@ -11,7 +11,7 @@ const page = () => {
       </TabsList>
       <TabsContent value="phonenumber">
         <div className="animate-fade-left">
-          <MobileRegisterForm />
+          <MobileLoginForm />
         </div>
       </TabsContent>
       <TabsContent value="email">

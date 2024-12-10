@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,12 +19,18 @@ import { useForm } from "react-hook-form";
 import { CardWrapper } from "../ui/card-wrapper";
 import { FormError } from "../ui/form/form-error";
 import { FormSuccess } from "../ui/form/form-success";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
 export const MobileLoginForm = () => {
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isPending, startTransition] = useTransition();
+  const [value, setValue] = useState("");
 
   const form = useForm({
     resolver: zodResolver(OtpLoginSchema),
@@ -58,7 +65,7 @@ export const MobileLoginForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="خوش آمدید"
+      // headerLabel="خوش آمدید"
       backButtonLabel="حساب کاربری ندارید؟"
       backButtonHref="/auth/register"
     >
@@ -93,18 +100,43 @@ export const MobileLoginForm = () => {
                 name="code"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>کد ارسال شده</FormLabel>
+                    <FormLabel>کد یکبار مصرف</FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        disabled={isPending}
-                        placeholder="123456"
-                      />
+                      <InputOTP maxLength={6} {...field} disabled={isPending}>
+                        <InputOTPGroup>
+                          <InputOTPSlot index={0} />
+                          <InputOTPSlot index={1} />
+                          <InputOTPSlot index={2} />
+                          <InputOTPSlot index={3} />
+                          <InputOTPSlot index={4} />
+                          <InputOTPSlot index={5} />
+                        </InputOTPGroup>
+                      </InputOTP>
                     </FormControl>
+                    <FormDescription>
+                      لطفا کد یکبار مصرف ارسال شده به موبایلتان را وارد کنید
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+              // <FormField
+              //   control={form.control}
+              //   name="code"
+              //   render={({ field }) => (
+              //     <FormItem>
+              //       <FormLabel>کد ارسال شده</FormLabel>
+              //       <FormControl>
+              //         <Input
+              //           {...field}
+              //           disabled={isPending}
+              //           placeholder="123456"
+              //         />
+              //       </FormControl>
+              //       <FormMessage />
+              //     </FormItem>
+              //   )}
+              // />
             )}
           </div>
           <FormError message={error} />

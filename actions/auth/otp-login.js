@@ -9,9 +9,8 @@ import { sendTwoFactorTokenEmail } from "@/lib/mail";
 import { generateOtpToken } from "@/lib/tokens";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { OtpLoginSchema } from "@/schemas";
-import { AuthError } from "next-auth";
-import { otpRegister } from "./otp-register";
 import bcrypt from "bcryptjs";
+import { AuthError } from "next-auth";
 
 // Login returns 'error', 'success', 'twoFactor'
 
