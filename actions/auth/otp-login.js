@@ -50,7 +50,7 @@ export const otpLogin = async (values) => {
   }
 
   // Check 2FA
-  if (existingUser) {
+  if (existingUser.phoneNumber) {
     if (code) {
       const otpToken = await getOtpTokenByPhoneNumber(existingUser.phoneNumber);
       if (!otpToken) return { error: "کد وارد شده اشتباه است" };
@@ -88,9 +88,9 @@ export const otpLogin = async (values) => {
       // await sendTwoFactorTokenEmail(otpToken.phoneNumber, otpToken.token);
       await sendTwoFactorTokenEmail("seyyedi98@outlook.com", otpToken.token);
       return {
-        showOtpInput: true,
+        showOtpInput: true, // Change login page
         success: "رمز عبور یکبار مصرف به موبایل شما ارسال شد",
-      }; // Change login page
+      };
     }
   }
 

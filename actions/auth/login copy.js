@@ -80,41 +80,9 @@ export const login = async (values) => {
         },
       });
     } else {
-      // Enter OTP code menu
-      const previousTwoFactorToken = await getTwoFactorTokenByEmail(
-        existingUser.email
-      );
-      // Send 2FA code for first time
-      if (!previousTwoFactorToken) {
-        const twoFactorToken = await generateTwoFactorToken(existingUser.email);
-        await sendTwoFactorTokenEmail(
-          twoFactorToken.email,
-          twoFactorToken.token
-        );
-        return { twoFactor: true }; // Change login page
-      } else {
-        // If code already sent in last 2 min
-        const hasExpired =
-          new Date(previousTwoFactorToken.expires) < new Date();
-        if (!hasExpired) {
-          return {
-            error: "لطفا ۲ دقیقه تا ارسال مجدد کد فعالسازی منتظر باشید",
-          };
-        } else {
-          // send new code
-          const twoFactorToken = await generateTwoFactorToken(
-            existingUser.email
-          );
-          await sendTwoFactorTokenEmail(
-            twoFactorToken.email,
-            twoFactorToken.token
-          );
-          return {
-            twoFactor: true, // Change login page
-            success: "رمز عبور یکبار مصرف به موبایل شما ارسال شد",
-          };
-        }
-      }
+      const twoFactorToken = await generateTwoFactorToken(existingUser.email);
+      await sendTwoFactorTokenEmail(twoFactorToken.email, twoFactorToken.token);
+      return { twoFactor: true }; // Change login page
     }
   }
 

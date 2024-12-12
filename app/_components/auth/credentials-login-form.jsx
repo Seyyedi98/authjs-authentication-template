@@ -47,21 +47,17 @@ export const CredentialsLoginForm = () => {
       login(values)
         .then((data) => {
           if (data?.error) {
-            form.reset();
+            // form.reset();
             setError(data.error);
           }
 
           if (data?.success) {
-            form.reset();
+            // form.reset();
             setSuccess(data.success);
           }
 
           if (data?.twoFactor) {
             setShowTwoFactor(true);
-          }
-
-          if (!data?.twoFactor) {
-            setShowTwoFactor(false);
           }
         })
         .catch(() => setError("Something went wrong"));
@@ -114,6 +110,7 @@ export const CredentialsLoginForm = () => {
                         />
                       </FormControl>
                       <Button
+                        disabled={isPending}
                         size="sm"
                         variant="link"
                         className="px-0 font-normal"
