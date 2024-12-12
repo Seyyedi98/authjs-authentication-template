@@ -1,6 +1,13 @@
 "use client";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
+import { MobileLoginForm } from "./mobile-login-form";
 
 export const LoginButton = ({ children, mode = "redirect", asChild }) => {
   const router = useRouter();
@@ -10,7 +17,15 @@ export const LoginButton = ({ children, mode = "redirect", asChild }) => {
   };
 
   if (mode === "modal") {
-    return <span>TODO: Implement modal</span>;
+    return (
+      <Dialog>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent className="p-0 w-auto bg-transparent">
+          <DialogTitle className="hidden"></DialogTitle>
+          <MobileLoginForm />
+        </DialogContent>
+      </Dialog>
+    );
   }
 
   return (

@@ -16,7 +16,7 @@ export const newVerification = async (token) => {
   const existingUser = await getUserByEmail(existingToken.email);
 
   if (!existingToken) {
-    return { error: "Email does not exist" };
+    return { error: "ایمیل وجود ندارد" };
   }
 
   await prisma.user.update({
@@ -35,5 +35,5 @@ export const newVerification = async (token) => {
     },
   });
 
-  return { success: "Email verified" };
+  return { success: "ایمیل با موفقیت تایید شد" };
 };

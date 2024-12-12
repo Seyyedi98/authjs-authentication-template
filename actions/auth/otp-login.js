@@ -43,22 +43,25 @@ export const otpLogin = async (values) => {
     const otpToken = await generateOtpToken(newUser.phoneNumber);
     // await sendTwoFactorTokenEmail(otpToken.phoneNumber, otpToken.token);
     await sendTwoFactorTokenEmail("seyyedi98@outlook.com", otpToken.token);
-    return { showOtpInput: true, success: "OTP code has been sent" }; // Change login page
+    return {
+      showOtpInput: true,
+      success: "رمز یکبار مصرف به موبایل شما ارسال شد",
+    }; // Change login page
   }
 
   // Check 2FA
   if (existingUser) {
     if (code) {
       const otpToken = await getOtpTokenByPhoneNumber(existingUser.phoneNumber);
-      if (!otpToken) return { error: "Invalid code" };
+      if (!otpToken) return { error: "کد وارد شده اشتباه است" };
 
       if (otpToken.token !== code) {
-        return { error: "Invalid code" };
+        return { error: "کد وارد شده اشتباه است" };
       }
 
       const hasExpired = new Date(otpToken.expires) < new Date();
       if (hasExpired) {
-        return { error: "Code expired" };
+        return { error: "کد منقضی شده است" };
       }
 
       await prisma.otpToken.delete({
@@ -84,7 +87,10 @@ export const otpLogin = async (values) => {
       const otpToken = await generateOtpToken(existingUser.phoneNumber);
       // await sendTwoFactorTokenEmail(otpToken.phoneNumber, otpToken.token);
       await sendTwoFactorTokenEmail("seyyedi98@outlook.com", otpToken.token);
-      return { showOtpInput: true, success: "OTP code has been sent" }; // Change login page
+      return {
+        showOtpInput: true,
+        success: "رمز عبور یکبار مصرف به موبایل شما ارسال شد",
+      }; // Change login page
     }
   }
 

@@ -120,23 +120,6 @@ export const MobileLoginForm = () => {
                   </FormItem>
                 )}
               />
-              // <FormField
-              //   control={form.control}
-              //   name="code"
-              //   render={({ field }) => (
-              //     <FormItem>
-              //       <FormLabel>کد ارسال شده</FormLabel>
-              //       <FormControl>
-              //         <Input
-              //           {...field}
-              //           disabled={isPending}
-              //           placeholder="123456"
-              //         />
-              //       </FormControl>
-              //       <FormMessage />
-              //     </FormItem>
-              //   )}
-              // />
             )}
           </div>
           <FormError message={error} />

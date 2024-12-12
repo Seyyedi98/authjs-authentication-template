@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,6 +20,11 @@ import { useForm } from "react-hook-form";
 import { CardWrapper } from "../ui/card-wrapper";
 import { FormError } from "../ui/form/form-error";
 import { FormSuccess } from "../ui/form/form-success";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
 export const CredentialsLoginForm = () => {
   const [showTwoFactor, setShowTwoFactor] = useState(false);
@@ -127,16 +133,35 @@ export const CredentialsLoginForm = () => {
                 name="code"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>ورود دو مرحله ای</FormLabel>
+                    <FormLabel>کد یکبار مصرف</FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        disabled={isPanding}
-                        placeholder="123456"
-                      />
+                      <InputOTP maxLength={6} {...field} disabled={isPanding}>
+                        <InputOTPGroup>
+                          <InputOTPSlot index={0} />
+                          <InputOTPSlot index={1} />
+                          <InputOTPSlot index={2} />
+                          <InputOTPSlot index={3} />
+                          <InputOTPSlot index={4} />
+                          <InputOTPSlot index={5} />
+                        </InputOTPGroup>
+                      </InputOTP>
                     </FormControl>
+                    <FormDescription>
+                      لطفا کد یکبار مصرف ارسال شده به ایمیلتان را وارد کنید
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
+                  // <FormItem>
+                  //   <FormLabel>ورود دو مرحله ای</FormLabel>
+                  //   <FormControl>
+                  //     <Input
+                  //       {...field}
+                  //       disabled={isPanding}
+                  //       placeholder="123456"
+                  //     />
+                  //   </FormControl>
+                  //   <FormMessage />
+                  // </FormItem>
                 )}
               />
             )}

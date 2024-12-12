@@ -24,7 +24,8 @@ export const register = async (values) => {
   // Check if user with this email already registered
   const existingUser = await getUserByEmail(email);
 
-  if (existingUser) return { error: "Email already in use" };
+  if (existingUser)
+    return { error: "کاربری با این ایمیل قبلا ثبت نام کرده است" };
 
   // Create user
   await prisma.user.create({
@@ -39,5 +40,5 @@ export const register = async (values) => {
 
   await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
-  return { success: "Confirmation email sent!" };
+  return { success: "لینک تایید به ایمیل شما ارسال شد" };
 };

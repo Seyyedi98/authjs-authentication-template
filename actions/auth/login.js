@@ -29,7 +29,7 @@ export const login = async (values) => {
   const existingUser = await getUserByEmail(email);
 
   if (!existingUser || !existingUser.email || !existingUser.password) {
-    return { error: "Email does not exist" };
+    return { error: "کاربری با این آدرس ایمیل یافت نشد" };
   }
 
   if (!existingUser.emailVerified) {
@@ -49,15 +49,15 @@ export const login = async (values) => {
   if (existingUser.isTwoFactorEnabled && existingUser.email) {
     if (code) {
       const twoFactorToken = await getTwoFactorTokenByEmail(existingUser.email);
-      if (!twoFactorToken) return { error: "Invalid code" };
+      if (!twoFactorToken) return { error: "کد نامعتبر" };
 
       if (twoFactorToken.token !== code) {
-        return { error: "Invalid code" };
+        return { error: "کد نامعتبر" };
       }
 
       const hasExpired = new Date(twoFactorToken.expires) < new Date();
       if (hasExpired) {
-        return { error: "Code expired" };
+        return { error: "کد منقضی شده است" };
       }
 
       await prisma.twoFactorToken.delete({
@@ -96,7 +96,7 @@ export const login = async (values) => {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { error: "Invalid credentials" };
+          return { error: "رمز عبور اشتباه است" };
         default:
           return { error: "Something went wrong" };
       }

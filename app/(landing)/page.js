@@ -5,7 +5,8 @@ const page = async () => {
   return (
     <div>
       <h1>Title</h1>
-      <LoginButton>
+      {/* <LoginButton mode="modal" asChild> */}
+      <LoginButton asChild>
         <Button>شروع</Button>
       </LoginButton>
     </div>

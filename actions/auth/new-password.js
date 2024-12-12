@@ -21,7 +21,7 @@ export const newPassword = async (values, token) => {
   if (hasExpired) return { error: "Token has expired!" };
 
   const existingUser = await getUserByEmail(existingToken.email);
-  if (!existingToken) return { error: "Email does not exist" };
+  if (!existingToken) return { error: "کاربری با این ایمیل یافت نشد" };
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -36,5 +36,5 @@ export const newPassword = async (values, token) => {
     where: { id: existingToken.id },
   });
 
-  return { success: "Password Updated!" };
+  return { success: "رمز عبور تغییر یافت" };
 };

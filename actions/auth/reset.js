@@ -9,14 +9,14 @@ export const reset = async (values) => {
   const validatedFields = ResetSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: "Invalid email!" };
+    return { error: "آدرس ایمیل نامعتبر" };
   }
 
   const { email } = validatedFields.data;
   const existingUser = await getUserByEmail(email);
 
   if (!existingUser) {
-    return { error: "Email not found!" };
+    return { error: "کاربری با این ایمیل یافت نشد" };
   }
 
   const passwordResetToken = await generatePasswordResetToken(email);
