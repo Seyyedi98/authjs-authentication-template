@@ -47,12 +47,10 @@ export const MobileLoginForm = () => {
     startTransition(async () => {
       otpLogin(values).then((data) => {
         if (data?.error) {
-          // form.reset();
           setError(data.error);
         }
 
         if (data?.success) {
-          // form.reset();
           setSuccess(data.success);
         }
 

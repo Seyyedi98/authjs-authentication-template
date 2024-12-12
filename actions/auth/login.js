@@ -29,7 +29,7 @@ export const login = async (values) => {
   const existingUser = await getUserByEmail(email);
 
   if (!existingUser || !existingUser.email || !existingUser.password) {
-    return { error: "کاربری با این آدرس ایمیل یافت نشد" };
+    return { error: "نام کاربری یا رمز عبور اشتباه است" };
   }
 
   if (!existingUser.emailVerified) {
@@ -42,7 +42,7 @@ export const login = async (values) => {
       verificationToken.token
     );
 
-    return { success: "Confirmation email sent!" };
+    return { success: "لینک فعالسازی به ایمیل شما ارسال شد" };
   }
 
   // Check 2FA
@@ -52,7 +52,7 @@ export const login = async (values) => {
       if (!twoFactorToken) return { error: "کد نامعتبر" };
 
       if (twoFactorToken.token !== code) {
-        return { error: "کد نامعتبر" };
+        return { error: "کد وارد شده اشتباه است", twoFactor: false };
       }
 
       const hasExpired = new Date(twoFactorToken.expires) < new Date();
@@ -80,9 +80,18 @@ export const login = async (values) => {
         },
       });
     } else {
-      const twoFactorToken = await generateTwoFactorToken(existingUser.email);
-      await sendTwoFactorTokenEmail(twoFactorToken.email, twoFactorToken.token);
-      return { twoFactor: true }; // Change login page
+      const twoFactorToken = await getTwoFactorTokenByEmail(existingUser.email);
+      const hasExpired = new Date(twoFactorToken.expires) < new Date();
+      if (!hasExpired) {
+        return { error: "برای ارسال مجدد کد باید ۲ دقیقه منتظر بمانید" }; // Change login page
+      } else {
+        const twoFactorToken = await generateTwoFactorToken(existingUser.email);
+        await sendTwoFactorTokenEmail(
+          twoFactorToken.email,
+          twoFactorToken.token
+        );
+        return { twoFactor: true }; // Change login page
+      }
     }
   }
 

@@ -30,7 +30,7 @@ export const CredentialsLoginForm = () => {
   const [showTwoFactor, setShowTwoFactor] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [isPanding, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm({
     resolver: zodResolver(LoginSchema),
@@ -59,6 +59,10 @@ export const CredentialsLoginForm = () => {
           if (data?.twoFactor) {
             setShowTwoFactor(true);
           }
+
+          if (!data?.twoFactor) {
+            setShowTwoFactor(false);
+          }
         })
         .catch(() => setError("Something went wrong"));
     });
@@ -85,7 +89,7 @@ export const CredentialsLoginForm = () => {
                       <FormControl>
                         <Input
                           {...field}
-                          disabled={isPanding}
+                          disabled={isPending}
                           placeholder="email@mail.com"
                           type="email"
                         />
@@ -104,7 +108,7 @@ export const CredentialsLoginForm = () => {
                       <FormControl>
                         <Input
                           {...field}
-                          disabled={isPanding}
+                          disabled={isPending}
                           placeholder="********"
                           type="password"
                         />
@@ -135,7 +139,7 @@ export const CredentialsLoginForm = () => {
                   <FormItem>
                     <FormLabel>کد یکبار مصرف</FormLabel>
                     <FormControl>
-                      <InputOTP maxLength={6} {...field} disabled={isPanding}>
+                      <InputOTP maxLength={6} {...field} disabled={isPending}>
                         <InputOTPGroup>
                           <InputOTPSlot index={0} />
                           <InputOTPSlot index={1} />
@@ -151,24 +155,13 @@ export const CredentialsLoginForm = () => {
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
-                  // <FormItem>
-                  //   <FormLabel>ورود دو مرحله ای</FormLabel>
-                  //   <FormControl>
-                  //     <Input
-                  //       {...field}
-                  //       disabled={isPanding}
-                  //       placeholder="123456"
-                  //     />
-                  //   </FormControl>
-                  //   <FormMessage />
-                  // </FormItem>
                 )}
               />
             )}
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button disabled={isPanding} type="submit" className="w-full">
+          <Button disabled={isPending} type="submit" className="w-full">
             {showTwoFactor ? "ارسال" : "ورود"}
           </Button>
         </form>
