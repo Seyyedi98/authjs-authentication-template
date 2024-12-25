@@ -80,7 +80,7 @@ export const login = async (values) => {
         },
       });
     } else {
-      // Enter OTP code menu
+      // Enter 2FA code menu
       const previousTwoFactorToken = await getTwoFactorTokenByEmail(
         existingUser.email
       );

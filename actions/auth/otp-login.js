@@ -84,13 +84,37 @@ export const otpLogin = async (values) => {
         },
       });
     } else {
-      const otpToken = await generateOtpToken(existingUser.phoneNumber);
-      // await sendTwoFactorTokenEmail(otpToken.phoneNumber, otpToken.token);
-      await sendTwoFactorTokenEmail("seyyedi98@outlook.com", otpToken.token);
-      return {
-        showOtpInput: true, // Change login page
-        success: "رمز عبور یکبار مصرف به موبایل شما ارسال شد",
-      };
+      const previousOtpToken = await getOtpTokenByPhoneNumber(
+        existingUser.phoneNumber
+      );
+      if (!previousOtpToken) {
+        const otpToken = await generateOtpToken(existingUser.phoneNumber);
+        // await sendTwoFactorTokenEmail(otpToken.phoneNumber, otpToken.token);
+        await sendTwoFactorTokenEmail("seyyedi98@outlook.com", otpToken.token);
+        return {
+          showOtpInput: true, // Change login page
+          success: "رمز عبور یکبار مصرف به موبایل شما ارسال شد",
+        };
+      } else {
+        // If code already sent in last 2 min
+        const hasExpired = new Date(previousOtpToken.expires) < new Date();
+        if (!hasExpired) {
+          return {
+            error: "لطفا ۲ دقیقه تا ارسال مجدد کد فعالسازی منتظر باشید",
+          };
+        } else {
+          const otpToken = await generateOtpToken(existingUser.phoneNumber);
+          // await sendTwoFactorTokenEmail(otpToken.phoneNumber, otpToken.token);
+          await sendTwoFactorTokenEmail(
+            "seyyedi98@outlook.com",
+            otpToken.token
+          );
+          return {
+            showOtpInput: true, // Change login page
+            success: "رمز عبور یکبار مصرف به موبایل شما ارسال شد",
+          };
+        }
+      }
     }
   }
 
