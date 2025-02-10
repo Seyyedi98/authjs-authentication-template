@@ -37,8 +37,7 @@ export default {
           const user = await getUserByPhoneNumber(phoneNumber);
           if (!user || !user.password) return null;
 
-          const passwordMatch = await bcrypt.compare(password, user.password);
-          if (passwordMatch) return user;
+          return user;
         }
         return null;
       },

@@ -24,6 +24,9 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
+import Link from "next/link";
+import { ArrowLeftIcon, Loader } from "lucide-react";
 
 export const MobileLoginForm = () => {
   const [showOtpInput, setShowOtpInput] = useState(false);
@@ -40,6 +43,8 @@ export const MobileLoginForm = () => {
       code: "",
     },
   });
+
+  const isCodeEntered = form.watch("code");
 
   const onSubmit = (values) => {
     setError("");
@@ -80,6 +85,8 @@ export const MobileLoginForm = () => {
                     <FormLabel>شماره موبایل</FormLabel>
                     <FormControl>
                       <Input
+                        type="number"
+                        pattern="\d*"
                         {...field}
                         disabled={isPending}
                         placeholder="09123456789"
@@ -100,7 +107,12 @@ export const MobileLoginForm = () => {
                   <FormItem>
                     <FormLabel>کد یکبار مصرف</FormLabel>
                     <FormControl>
-                      <InputOTP maxLength={6} {...field} disabled={isPending}>
+                      <InputOTP
+                        {...field}
+                        maxLength={6}
+                        disabled={isPending}
+                        pattern={REGEXP_ONLY_DIGITS}
+                      >
                         <InputOTPGroup>
                           <InputOTPSlot index={0} />
                           <InputOTPSlot index={1} />
@@ -122,9 +134,35 @@ export const MobileLoginForm = () => {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button disabled={isPending} type="submit" className="w-full">
-            {showOtpInput ? "ارسال" : "ورود"}
-          </Button>
+
+          {/* Enter mobile number */}
+          {!showOtpInput && (
+            <Button disabled={isPending} type="submit" className="w-full">
+              {isPending ? <Loader className="animate-spin" /> : "ارسال"}
+            </Button>
+          )}
+
+          {/* Enter OTP Code */}
+          {showOtpInput && !error && (
+            <Button
+              disabled={isPending || !isCodeEntered}
+              type="submit"
+              className="w-full"
+            >
+              {isPending ? <Loader className="animate-spin" /> : "ورود"}
+            </Button>
+          )}
+
+          {/* Wrong OTP Code */}
+          {showOtpInput && error && (
+            <Link
+              href="/"
+              className="group flex w-full items-center justify-center gap-1 text-center"
+            >
+              <ArrowLeftIcon className="mt-1 h-4 w-4 duration-200 group-hover:-translate-x-1" />
+              <span className="text-center text-sm">بازگشت</span>
+            </Link>
+          )}
         </form>
       </Form>
     </CardWrapper>

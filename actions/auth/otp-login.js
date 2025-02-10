@@ -18,8 +18,6 @@ export const otpLogin = async (values) => {
   // server side values validation
   const validatedFields = OtpLoginSchema.safeParse(values);
 
-  const hashedPassword = await bcrypt.hash("password", 10);
-
   if (!validatedFields.success) {
     return { error: "Invalid fields" };
   }
@@ -33,7 +31,7 @@ export const otpLogin = async (values) => {
     const newUser = await prisma.user.create({
       data: {
         phoneNumber,
-        password: hashedPassword,
+        password,
         isTwoFactorEnabled: true,
         emailVerified: new Date(),
       },

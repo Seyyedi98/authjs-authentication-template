@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { CardWrapper } from "../ui/card-wrapper";
 import { FormError } from "../ui/form/form-error";
 import { FormSuccess } from "../ui/form/form-success";
+import { Loader } from "lucide-react";
 
 export const CredentialsRegisterForm = () => {
   const [error, setError] = useState("");
@@ -113,7 +114,7 @@ export const CredentialsRegisterForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button disabled={isPanding} type="submit" className="w-full">
-            عضویت
+            {isPending ? <Loader className="animate-spin" /> : "عضویت"}
           </Button>
         </form>
       </Form>

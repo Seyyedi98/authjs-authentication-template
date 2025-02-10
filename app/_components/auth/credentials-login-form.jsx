@@ -25,6 +25,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { Loader } from "lucide-react";
 
 export const CredentialsLoginForm = () => {
   const [showTwoFactor, setShowTwoFactor] = useState(false);
@@ -159,7 +160,13 @@ export const CredentialsLoginForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button disabled={isPending} type="submit" className="w-full">
-            {showTwoFactor ? "ارسال" : "ورود"}
+            {isPending ? (
+              <Loader className="animate-spin" />
+            ) : showTwoFactor ? (
+              "ارسال"
+            ) : (
+              "ورود"
+            )}
           </Button>
         </form>
       </Form>
