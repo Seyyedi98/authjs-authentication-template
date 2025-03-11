@@ -1,5 +1,6 @@
 import { CredentialsLoginForm } from "@/app/_components/auth/credentials-login-form";
 import { MobileLoginForm } from "@/app/_components/auth/mobile-login-form";
+import Social from "@/app/_components/auth/social";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Login = () => {
@@ -13,6 +14,7 @@ const Login = () => {
         <TabsContent value="phonenumber">
           <div className="animate-fade-left">
             <MobileLoginForm />
+            <Social />
           </div>
         </TabsContent>
         <TabsContent value="email">

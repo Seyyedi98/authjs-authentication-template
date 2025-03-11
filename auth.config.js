@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 import Credentials from "next-auth/providers/credentials";
 import { getUserByEmail, getUserByPhoneNumber } from "./data/user";
 import { LoginSchema, OtpLoginSchema } from "./schemas";
+import Google from "next-auth/providers/google";
+import NextAuth from "next-auth";
 
 export default {
   providers: [
@@ -41,6 +43,11 @@ export default {
         }
         return null;
       },
+    }),
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
 };
